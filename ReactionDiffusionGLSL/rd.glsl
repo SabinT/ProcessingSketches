@@ -7,15 +7,20 @@ uniform float deltaV;
 
 uniform sampler2D texture;
 
+// Currently unused
+uniform float deltaTime; // milliseconds
+
+const float STEP_MULTIPLIER = 1;
+
 // Diffusion rates
-const float DRATE_A = 0.9;
-const float DRATE_B = 0.18;
+uniform float dRateA = 0.9;
+uniform float dRateB = 0.18;
 
 // Rate at which Chemical A is introduced
-const float FEED_RATE = 0.0545;
+uniform float feedRate = 0.0945;
 
 // Rate at which Chemical B is removed
-const float KILL_RATE = 0.062;
+uniform float killRate = 0.09;
 
 // Weights for Laplacian
 const float CORNER_WEIGHT = 0.05;
@@ -56,8 +61,8 @@ void main(){
     float A = texture2D(texture, vertTexCoord.st )[0] ;
     float B = texture2D(texture, vertTexCoord.st )[1] ;
 
-    float A_1 = A + (DRATE_A * laplaceA(vertTexCoord.st, deltaU , deltaV) - A * B * B + FEED_RATE * (1 - A)) ;
-    float B_1 = B + (DRATE_B * laplaceB(vertTexCoord.st, deltaU, deltaV) + A * B * B - (KILL_RATE + FEED_RATE) * B)  ;
+    float A_1 = A + STEP_MULTIPLIER * (dRateA * laplaceA(vertTexCoord.st, deltaU , deltaV) - A * B * B + feedRate * (1 - A)) ;
+    float B_1 = B + STEP_MULTIPLIER * (dRateB * laplaceB(vertTexCoord.st, deltaU, deltaV) + A * B * B - (killRate + feedRate) * B)  ;
 
     gl_FragColor =  vec4(A_1, B_1, 0.0, 1.0);
 }
