@@ -13,21 +13,21 @@ void setupControls() {
      .setValue(feedRate);
      
   controls.addSlider("killRate")
-     .setPosition(10, 60)
+     .setPosition(10, 40)
      .setSize(600, 14)
      .setRange(0, 1)
      .setColorCaptionLabel(color(255))
      .setValue(killRate);
      
   controls.addSlider("dRateA")
-     .setPosition(10, 100)
+     .setPosition(10, 60)
      .setSize(600, 14)
      .setRange(0, 10)
      .setColorCaptionLabel(color(255))
      .setValue(dRateA);
      
   controls.addSlider("dRateB")
-     .setPosition(10, 140)
+     .setPosition(10, 80)
      .setSize(600, 14)
      .setRange(0, 10)
      .setColorCaptionLabel(color(255))
@@ -35,7 +35,7 @@ void setupControls() {
 }
 
 void drawHelpText() {
-  int startY = 160;
+  int startY = 100;
   
   text("Controls", 10, startY + 20);
   text("A: Add chemical A (based on image)", 10, startY + 40);
