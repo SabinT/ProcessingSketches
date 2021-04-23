@@ -13,6 +13,7 @@ void draw() {
   // Make sure that pixels[] has data
   image.loadPixels();
     
+  // Horribly inefficient O(n^2) sort, but makes for a nice animation
   for (int i = 0; i < image.width; i++) {
     for (int j = 0; j < image.height - 1; j++) {
       color c = image.pixels[j * image.width + i];
