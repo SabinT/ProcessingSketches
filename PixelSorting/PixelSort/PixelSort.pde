@@ -22,7 +22,12 @@ void draw() {
       
       float bc = brightness(c);
       float bnc = brightness(nc);
-      if (bc < 100 && bc < bnc) {
+      
+      // Do not sort pixels based on a brightness threshold
+      // Add some noise to the threshold
+      float t = 80 - noise(i,j) * 10;
+      
+      if (bc > t && bc > t && bc < bnc) {
         // Swap pixels
         image.pixels[j * image.width + i] = nc;
         image.pixels[nj * image.width + i] = c;
