@@ -9,7 +9,7 @@ Circle boundingCircle;
 ArrayList<Circle> circles;
 
 // This code runs once at the start of the program.
-// You can use this for one-time calculations.
+// You can use this for one-time setup/calculations.
 void setup() {
   size(1000, 1000);
   
