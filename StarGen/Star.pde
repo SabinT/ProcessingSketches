@@ -8,9 +8,9 @@ class Star {
     this.col = col;
   }
   
-  public void Draw() {
-    fill(col);
-    noStroke();
-    circle(position.x, position.y, radius * 2);
+  public void Draw(PGraphics g) {
+    g.fill(col);
+    g.noStroke();
+    g.circle(position.x, position.y, radius * 2);
   }
 }

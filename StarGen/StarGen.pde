@@ -1,5 +1,10 @@
 int constellationsGenerated = 0;
 
+PGraphics render;
+
+int rw = 4000;
+int rh = 4000;
+
 float w = 1080;
 float h = 1080;
 
@@ -8,6 +13,8 @@ ArrayList<Star> stars = new ArrayList<Star>();
 
 void setup() {
   size(1080, 1080);
+  render = createGraphics(rw, rh);
+  
   smooth(8);
   strokeWeight(4);
   
@@ -31,7 +38,7 @@ void generate() {
     while (j++ <= maxAttempts) {
       // Using r2 as padding to make sure coordinates of stars that will get added to constellation  //<>//
       // always lie inside the screen
-      PVector p = new PVector(random(r2, w - r2), random(r2, h - r2));
+      PVector p = new PVector(random(r2, rw - r2), random(r2, rh - r2));
 
       // Make sure this point isn't too close to existing constellations
       boolean tooClose = false;
@@ -59,7 +66,7 @@ void generate() {
 
 void generateNewStarIfNeeded() {
     int padding = 10;
-    PVector p = new PVector(random(padding, w - padding), random(padding, h - padding));
+    PVector p = new PVector(random(padding, rw - padding), random(padding, rh - padding));
     
     Star s = new Star(p, color(random(100, 255)));
     stars.add(s);
@@ -85,16 +92,22 @@ void draw() {
     isGenerating = false;
   }
   
-  clear();
-  background(0);
+  render.beginDraw();
+  
+  render.clear();
+  render.background(0);
   
   for(Constellation c: constellations) {
-    c.Draw();
+    c.Draw(render);
   }
   
   for(Star s: stars) {
-    s.Draw();
+    s.Draw(render);
   }
+  
+  render.endDraw();
+  
+  image(render, 0, 0, w, h);
 }
 
 void keyPressed() {
@@ -105,6 +118,15 @@ void keyPressed() {
  if (key == 'c' || key == 'C') {
     controlsVisible = !controlsVisible;
  }
+ 
+   switch (key) {
+    case 's':
+      String dateString = String.format("Star_%d-%02d-%02d %02d.%02d.%02d",
+        year(), month(), day(), hour(), minute(), second());
+      saveFrame(dateString + ".scr.png");
+      render.save(dateString + ".png");
+      break;
+  }
  
  if (controlsVisible) {
    cp5.show();

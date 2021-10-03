@@ -35,17 +35,17 @@ class Constellation {
     return (pos2.sub(this.center)).mag() <  (diameter ? this.radius * 2 : this.radius);
   }
   
-  public void Draw() {
+  public void Draw(PGraphics g) {
     // Draw the name of the constellation
-    fill(color(255));
-    textAlign(CENTER, CENTER);
-    text(this.name, this.center.x, this.center.y);
+    g.fill(color(255));
+    g.textAlign(CENTER, CENTER);
+    g.text(this.name, this.center.x, this.center.y);
     
     if (debugDraw) {
-      noFill();
-      stroke(100);
-      strokeWeight(0.5);
-      circle(this.center.x, this.center.y, this.radius * 2);
+      g.noFill();
+      g.stroke(100);
+      g.strokeWeight(0.5);
+      g.circle(this.center.x, this.center.y, this.radius * 2);
     }
     
     // Draw lines from one start to another, in order.
@@ -53,15 +53,15 @@ class Constellation {
     for(int i = 0; i < this.stars.size(); i++) {
       Star a = this.stars.get(i);
 
-      noFill();
-      strokeWeight(2);
-      stroke(color(255));
-      circle(a.position.x, a.position.y, a.radius * 4);
+      g.noFill();
+      g.strokeWeight(2);
+      g.stroke(color(255));
+      g.circle(a.position.x, a.position.y, a.radius * 4);
 
       if (i > 0) {
         Star b = this.stars.get(i - 1);
-        strokeWeight(1);
-        line(a.position.x, a.position.y, b.position.x, b.position.y);
+        g.strokeWeight(1);
+        g.line(a.position.x, a.position.y, b.position.x, b.position.y);
       }
     }
   }
